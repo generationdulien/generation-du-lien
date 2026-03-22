@@ -13,3 +13,5 @@ services:
         value: info
       - key: CORS_ORIGIN
         value: https://generation-du-lien.vercel.app
+      - key: FRONTEND_URL
+        value: https://generation-du-lien.vercel.app
