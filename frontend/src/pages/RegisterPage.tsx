@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
@@ -8,7 +8,6 @@ import { register as apiRegister } from "../lib/api";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { Card, CardHeader, CardContent } from "../components/Card";
-import { Checkbox } from "../components/ui/checkbox";
 import { Alert, AlertDescription } from "../components/ui/alert";
 import { Label } from "../components/ui/label";
 
@@ -41,7 +40,6 @@ export function RegisterPage() {
 
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterInput>({
@@ -140,16 +138,11 @@ export function RegisterPage() {
 
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
-                <Controller
-                  name="terms"
-                  control={control}
-                  render={({ field }) => (
-                    <Checkbox
-                      id="terms"
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  )}
+                <input
+                  type="checkbox"
+                  id="terms"
+                  className="peer relative h-4 w-4 shrink-0 rounded border border-input cursor-pointer"
+                  {...register("terms")}
                 />
                 <Label htmlFor="terms" className="text-sm font-normal cursor-pointer">
                   J'accepte les{" "}
