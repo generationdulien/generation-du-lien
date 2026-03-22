@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
@@ -41,6 +41,7 @@ export function RegisterPage() {
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterInput>({
@@ -139,7 +140,17 @@ export function RegisterPage() {
 
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
-                <Checkbox id="terms" {...register("terms")} />
+                <Controller
+                  name="terms"
+                  control={control}
+                  render={({ field }) => (
+                    <Checkbox
+                      id="terms"
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  )}
+                />
                 <Label htmlFor="terms" className="text-sm font-normal cursor-pointer">
                   J'accepte les{" "}
                   <Link to="/terms" className="text-primary hover:underline">
