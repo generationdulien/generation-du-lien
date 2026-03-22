@@ -6,8 +6,6 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   helperText?: string;
 }
 
-let inputCounter = 0;
-
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
