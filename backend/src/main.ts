@@ -1,6 +1,10 @@
 import express, { Express } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import logger from "./config/logger.js";
+import { errorHandler } from "./middleware/errorHandler.js";
+import authRoutes from "./routes/auth.js";
+import topicsRoutes from "./routes/topics.js";
 
 dotenv.config();
 
@@ -24,32 +28,8 @@ app.get("/health", (req, res) => {
 });
 
 // ============= Phase 1 API Routes =============
-// TO BE IMPLEMENTED BY Agent Back
-// - POST /api/auth/register
-// - POST /api/auth/verify-email
-// - POST /api/auth/login
-// - GET /api/topics
-// - GET /api/topics/:id
-
-// ============= Error Handler =============
-app.use(
-  (
-    err: any,
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction
-  ) => {
-    console.error("❌ Error:", err);
-    res.status(500).json({
-      error: {
-        code: "INTERNAL_SERVER_ERROR",
-        message: "An unexpected error occurred",
-      },
-      statusCode: 500,
-      timestamp: new Date().toISOString(),
-    });
-  }
-);
+app.use("/api/auth", authRoutes);
+app.use("/api/topics", topicsRoutes);
 
 // ============= 404 Handler =============
 app.use((req: express.Request, res: express.Response) => {
@@ -63,6 +43,9 @@ app.use((req: express.Request, res: express.Response) => {
   });
 });
 
+// ============= Error Handler (must be last) =============
+app.use(errorHandler);
+
 // ============= Start Server =============
 app.listen(PORT, () => {
   console.log(`
@@ -72,9 +55,9 @@ app.listen(PORT, () => {
 ║  http://localhost:${String(PORT).padEnd(5)} ║
 ╚══════════════════════════════════════╝
   `);
-  console.log("📝 Environment:", process.env.NODE_ENV);
-  console.log(
-    "🔗 CORS enabled for:",
-    process.env.CORS_ORIGIN || "http://localhost:5173"
+  logger.info("📝 Environment: " + process.env.NODE_ENV);
+  logger.info(
+    "🔗 CORS enabled for: " +
+      (process.env.CORS_ORIGIN || "http://localhost:5173")
   );
 });
