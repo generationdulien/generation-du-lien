@@ -1,10 +1,8 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "noImplicitAny": false,
-    "suppressImplicitAnyIndexErrors": true,
-    "skipLibCheck": true,
     "strict": false,
+    "noImplicitAny": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false
   },
