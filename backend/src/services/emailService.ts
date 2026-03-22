@@ -257,11 +257,11 @@ export const emailService = {
         html: getVerificationEmailHTML(verificationUrl),
       });
 
-      logger.info(`✅ Verification email sent to ${email}`, { messageId: result.id });
+      logger.info(`✅ Verification email sent to ${email}`, { messageId: (result as any).id });
 
       return {
         sent: true,
-        messageId: result.id,
+        messageId: (result as any).id,
         message: `Verification email sent to ${email}`,
       };
     } catch (error) {
@@ -283,11 +283,11 @@ export const emailService = {
         html: getWelcomeEmailHTML(firstName),
       });
 
-      logger.info(`✅ Welcome email sent to ${email}`, { messageId: result.id });
+      logger.info(`✅ Welcome email sent to ${email}`, { messageId: (result as any).id });
 
       return {
         sent: true,
-        messageId: result.id,
+        messageId: (result as any).id,
         message: `Welcome email sent to ${email}`,
       };
     } catch (error) {
