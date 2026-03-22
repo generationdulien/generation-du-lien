@@ -3,11 +3,11 @@ services:
     name: generation-lien-api
     runtime: node
     rootDir: backend
-    buildCommand: npm install && npm run build
+    buildCommand: npm ci && npm run build
     startCommand: node dist/main.js
     healthCheckPath: /health
     envVars:
       - key: NODE_ENV
-        value: production
+        value: development
       - key: LOG_LEVEL
         value: info
