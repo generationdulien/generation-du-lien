@@ -1,4 +1,6 @@
 import React from "react";
+import { Input as ShadcnInput } from "./ui/input.js";
+import { Label } from "./ui/label.js";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -6,6 +8,10 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   helperText?: string;
 }
 
+/**
+ * Wrapper around shadcn Input + Label with error and helper text support.
+ * Maintains forwardRef for react-hook-form compatibility.
+ */
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
@@ -21,25 +27,26 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const inputId = id || (label ? `input-${label.toLowerCase().replace(/\s+/g, "-")}` : undefined);
 
     return (
-      <div className="w-full">
+      <div className="w-full space-y-1.5">
         {label && (
-          <label htmlFor={inputId} className="block text-sm font-medium text-gray-700 mb-1">
+          <Label htmlFor={inputId} className="text-sm font-medium">
             {label}
-          </label>
+          </Label>
         )}
-        <input
+        <ShadcnInput
           ref={ref}
           id={inputId}
-          className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 ${
-            error ? "border-error-500" : "border-gray-300"
-          } ${className}`}
+          className={className}
+          aria-invalid={!!error}
           {...props}
         />
-        {error && <p className="text-sm text-error-600 mt-1">{error}</p>}
+        {error && <p className="text-xs text-destructive">{error}</p>}
         {helperText && !error && (
-          <p className="text-sm text-gray-500 mt-1">{helperText}</p>
+          <p className="text-xs text-muted-foreground">{helperText}</p>
         )}
       </div>
     );
   }
 );
+
+Input.displayName = "Input";

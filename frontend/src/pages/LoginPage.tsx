@@ -3,9 +3,11 @@ import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { login as apiLogin } from "../lib/api.js";
-import { Button } from "../components/Button.js";
-import { Input } from "../components/Input.js";
+import { login as apiLogin } from "../lib/api";
+import { Button } from "../components/Button";
+import { Input } from "../components/Input";
+import { Card, CardHeader, CardContent } from "../components/Card";
+import { Alert, AlertDescription } from "../components/ui/alert";
 
 const loginSchema = z.object({
   email: z.string().email("Adresse email invalide"),
@@ -52,72 +54,56 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
-            Se connecter
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+    <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
+      <Card className="w-full max-w-md">
+        <CardHeader className="space-y-2">
+          <h2 className="text-2xl font-bold tracking-tight">Se connecter</h2>
+          <p className="text-sm text-muted-foreground">
             Accédez à votre compte Génération du Lien
           </p>
-        </div>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {apiError && (
+            <Alert variant="destructive">
+              <AlertDescription>{apiError}</AlertDescription>
+            </Alert>
+          )}
 
-        {apiError && (
-          <div className="rounded-md bg-error-50 p-4">
-            <p className="text-sm text-error-700">{apiError}</p>
-          </div>
-        )}
+          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+            <Input
+              label="Email"
+              type="email"
+              {...register("email")}
+              error={errors.email?.message}
+              placeholder="jean@example.com"
+            />
 
-        <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            label="Email"
-            type="email"
-            {...register("email")}
-            error={errors.email?.message}
-            placeholder="jean@example.com"
-          />
+            <Input
+              label="Mot de passe"
+              type="password"
+              {...register("password")}
+              error={errors.password?.message}
+              placeholder="••••••••"
+            />
 
-          <Input
-            label="Mot de passe"
-            type="password"
-            {...register("password")}
-            error={errors.password?.message}
-            placeholder="••••••••"
-          />
+            <Button
+              type="submit"
+              className="w-full"
+              isLoading={isLoading}
+              disabled={isLoading}
+            >
+              Se connecter
+            </Button>
+          </form>
 
-          <div className="flex items-center justify-between">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                className="h-4 w-4 rounded border-gray-300"
-              />
-              <span className="ml-2 text-sm text-gray-600">
-                Se souvenir de moi
-              </span>
-            </label>
-            <a href="#" className="text-sm text-primary-600 hover:underline">
-              Mot de passe oublié ?
-            </a>
-          </div>
-
-          <Button
-            type="submit"
-            className="w-full"
-            isLoading={isLoading}
-            disabled={isLoading}
-          >
-            Se connecter
-          </Button>
-        </form>
-
-        <p className="text-center text-sm text-gray-600">
-          Pas encore inscrit ?{" "}
-          <Link to="/auth/register" className="text-primary-600 hover:underline">
-            S'inscrire
-          </Link>
-        </p>
-      </div>
+          <p className="text-center text-sm text-muted-foreground">
+            Pas encore inscrit ?{" "}
+            <Link to="/auth/register" className="text-primary hover:underline">
+              S'inscrire
+            </Link>
+          </p>
+        </CardContent>
+      </Card>
     </div>
   );
 }

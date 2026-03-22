@@ -1,48 +1,42 @@
+import { Button as ShadcnButton } from "./ui/button.js";
 import React from "react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline";
-  size?: "sm" | "md" | "lg";
+  variant?: "primary" | "secondary" | "outline" | "ghost" | "destructive" | "link";
+  size?: "default" | "sm" | "lg" | "xs" | "icon" | "icon-xs" | "icon-sm" | "icon-lg";
   isLoading?: boolean;
   children: React.ReactNode;
 }
 
+/**
+ * Wrapper around shadcn Button with backward compatibility for custom variants.
+ * Maps: primary → default, secondary → secondary, outline → outline
+ */
 export function Button({
   variant = "primary",
-  size = "md",
+  size = "default",
   isLoading = false,
-  className = "",
   disabled,
   children,
   ...props
 }: ButtonProps) {
-  const baseStyles =
-    "font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2";
-
-  const variants = {
-    primary:
-      "bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500",
-    secondary:
-      "bg-secondary-600 text-white hover:bg-secondary-700 focus:ring-secondary-500",
-    outline:
-      "border-2 border-primary-600 text-primary-600 hover:bg-primary-50 focus:ring-primary-500",
+  // Map old variants to shadcn variants
+  const variantMap: Record<string, "default" | "secondary" | "outline" | "ghost" | "destructive" | "link"> = {
+    primary: "default",
+    secondary: "secondary",
+    outline: "outline",
   };
 
-  const sizes = {
-    sm: "px-3 py-1.5 text-sm",
-    md: "px-4 py-2 text-base",
-    lg: "px-6 py-3 text-lg",
-  };
-
-  const disabledStyles = disabled || isLoading ? "opacity-50 cursor-not-allowed" : "";
+  const mappedVariant = variantMap[variant as keyof typeof variantMap] || (variant as "default" | "secondary" | "outline" | "ghost" | "destructive" | "link");
 
   return (
-    <button
-      className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${disabledStyles} ${className}`}
+    <ShadcnButton
+      variant={mappedVariant}
+      size={size}
       disabled={disabled || isLoading}
       {...props}
     >
       {isLoading ? "..." : children}
-    </button>
+    </ShadcnButton>
   );
 }
