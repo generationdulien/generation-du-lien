@@ -10,11 +10,14 @@ dotenv.config();
 
 const app: Express = express();
 const PORT = process.env.PORT || 3001;
+const corsOrigin = (process.env.CORS_ORIGIN || "http://localhost:5173").split(",");
+
+logger.info(`🌐 CORS configured for origins: ${JSON.stringify(corsOrigin)}`);
 
 // ============= Middleware =============
 app.use(
   cors({
-    origin: (process.env.CORS_ORIGIN || "http://localhost:5173").split(","),
+    origin: corsOrigin,
     credentials: true,
   })
 );
