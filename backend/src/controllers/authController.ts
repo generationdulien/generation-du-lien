@@ -3,6 +3,7 @@ import { registerSchema, loginSchema, verifyEmailSchema, resendVerificationSchem
 import * as authService from "../services/authService.js";
 import { sendSuccess, sendError } from "../utils/response.js";
 import { ValidationError } from "../utils/errors.js";
+import { verifyHCaptchaToken } from "../utils/hcaptcha.js";
 import logger from "../config/logger.js";
 
 export async function register(
@@ -13,10 +14,15 @@ export async function register(
   try {
     const validated = registerSchema.parse(req.body);
 
-    // TODO: Validate CAPTCHA token with provider
-    // For now, just accept it
-    if (!validated.captchaToken) {
-      throw new ValidationError("CAPTCHA validation failed");
+    // Validate CAPTCHA token with hCaptcha API
+    const captchaValidation = await verifyHCaptchaToken(
+      validated.captchaToken
+    );
+
+    if (!captchaValidation.valid) {
+      throw new ValidationError(
+        captchaValidation.error || "CAPTCHA validation failed"
+      );
     }
 
     const result = await authService.register({

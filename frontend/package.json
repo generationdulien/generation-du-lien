@@ -15,6 +15,7 @@
     "test:unit": "vitest"
   },
   "dependencies": {
+    "@hcaptcha/react-hcaptcha": "^2.0.2",
     "@hookform/resolvers": "^3.3.4",
     "@tanstack/react-query": "^5.28.0",
     "react": "^18.2.0",

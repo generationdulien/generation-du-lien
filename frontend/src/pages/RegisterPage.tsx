@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { register as apiRegister } from "../lib/api.js";
 import { Button } from "../components/Button.js";
 import { Input } from "../components/Input.js";
@@ -31,6 +32,8 @@ export function RegisterPage() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState<string | null>(null);
+  const hcaptchaRef = useRef<HCaptcha>(null);
 
   const {
     register,
@@ -41,16 +44,26 @@ export function RegisterPage() {
   });
 
   const onSubmit = async (data: RegisterInput) => {
+    setCaptchaError(null);
     setIsLoading(true);
     setApiError(null);
 
     try {
+      // Get CAPTCHA token
+      const captchaToken = hcaptchaRef.current?.getResponse();
+
+      if (!captchaToken) {
+        setCaptchaError("Veuillez compléter le CAPTCHA");
+        setIsLoading(false);
+        return;
+      }
+
       const response = await apiRegister({
         email: data.email,
         password: data.password,
         firstName: data.firstName,
         lastName: data.lastName,
-        captchaToken: "test-token", // TODO: Integrate real CAPTCHA
+        captchaToken: captchaToken,
       });
 
       if (response.success) {
@@ -142,6 +155,21 @@ export function RegisterPage() {
             {errors.terms && (
               <p className="text-sm text-error-600">{errors.terms.message}</p>
             )}
+          </div>
+
+          {captchaError && (
+            <div className="rounded-md bg-error-50 p-3">
+              <p className="text-sm text-error-700">{captchaError}</p>
+            </div>
+          )}
+
+          <div className="flex justify-center">
+            <HCaptcha
+              ref={hcaptchaRef}
+              sitekey={import.meta.env.VITE_HCAPTCHA_SITE_KEY}
+              theme="light"
+              size="normal"
+            />
           </div>
 
           <Button
