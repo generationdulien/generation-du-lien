@@ -12,7 +12,7 @@ export function authMiddleware(
   res: Response,
   next: NextFunction
 ) {
-  const authHeader = req.headers.authorization as string | undefined;
+  const authHeader = (req as any).headers?.authorization as string | undefined;
 
   if (!authHeader) {
     throw new AuthError("Authorization header is required");
