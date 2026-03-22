@@ -20,7 +20,7 @@ const registerSchema = z
       .string()
       .min(8, "Le mot de passe doit contenir au moins 8 caractères"),
     confirmPassword: z.string(),
-    terms: z.boolean().refine((val) => val === true, {
+    terms: z.boolean().default(false).refine((val) => val === true, {
       message: "Vous devez accepter les conditions",
     }),
   })
@@ -142,7 +142,7 @@ export function RegisterPage() {
                   type="checkbox"
                   id="terms"
                   className="peer relative h-4 w-4 shrink-0 rounded border border-input cursor-pointer"
-                  {...register("terms", { required: "Vous devez accepter les conditions" })}
+                  {...register("terms")}
                 />
                 <Label htmlFor="terms" className="text-sm font-normal cursor-pointer">
                   J'accepte les{" "}
