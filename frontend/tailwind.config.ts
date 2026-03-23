@@ -50,8 +50,8 @@ export default {
       },
       fontFamily: {
         sans: ['system-ui', 'sans-serif'],
-        display: ['Playfair Display', 'serif'],
-        body: ['Lato', 'sans-serif'],
+        display: ['DM Serif Display', 'serif'],
+        body: ['DM Sans', 'sans-serif'],
       },
       fontSize: {
         xs: ['0.75rem', { lineHeight: '1rem' }],
