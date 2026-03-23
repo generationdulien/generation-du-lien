@@ -4,101 +4,297 @@ import { Card, CardContent } from "../components/Card";
 
 const features = [
   {
-    icon: "🤝",
-    title: "Participation citoyenne",
+    number: "01",
+    title: "Participation Citoyenne",
     description:
-      "Chaque citoyen a le droit de participer à l'élaboration des politiques publiques.",
+      "Chaque voix compte dans la construction de notre programme politique. Ensemble, nous façonnons l'avenir.",
   },
   {
-    icon: "🎯",
-    title: "Transparence",
+    number: "02",
+    title: "Transparence Absolue",
     description:
-      "Nos débats et décisions sont ouverts et accessibles à tous.",
+      "Nos débats et décisions sont ouverts. Voir comment nous délibérons, c'est comprendre nos valeurs.",
   },
   {
-    icon: "🌱",
-    title: "Durabilité",
+    number: "03",
+    title: "Impact Durable",
     description:
-      "Nous construisons des solutions durables pour les générations futures.",
+      "Nous construisons des solutions qui perdurent. Pour aujourd'hui, pour demain, pour les générations futures.",
   },
 ];
 
 export function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary/10 to-background">
+    <div className="min-h-screen bg-slate-50">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Lato:wght@300;400;500&display=swap');
+
+        .font-display {
+          font-family: 'Playfair Display', serif;
+        }
+
+        .font-body {
+          font-family: 'Lato', sans-serif;
+        }
+
+        /* Animate on scroll */
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes slideInRight {
+          from {
+            opacity: 0;
+            transform: translateX(-40px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        .animate-fade-in-up {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .animate-slide-in-right {
+          animation: slideInRight 0.8s ease-out forwards;
+        }
+
+        .animation-delay-1 {
+          animation-delay: 0.2s;
+          opacity: 0;
+        }
+
+        .animation-delay-2 {
+          animation-delay: 0.4s;
+          opacity: 0;
+        }
+
+        .animation-delay-3 {
+          animation-delay: 0.6s;
+          opacity: 0;
+        }
+
+        /* Hover effects */
+        .feature-card {
+          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .feature-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 24px 48px rgba(15, 23, 42, 0.12);
+        }
+
+        .cta-button {
+          position: relative;
+          overflow: hidden;
+        }
+
+        .cta-button::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: rgba(255, 255, 255, 0.2);
+          transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+          left: 100%;
+        }
+
+        /* Gold accent line */
+        .gold-accent {
+          background: linear-gradient(90deg, transparent, #d4af37, transparent);
+          height: 1px;
+          width: 60px;
+          margin: 0 auto;
+        }
+      `}</style>
+
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
-        <div className="text-center space-y-8">
-          <div className="space-y-4">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-              Ensemble pour notre avenir
+      <section className="relative overflow-hidden pt-24 pb-32 md:pt-40 md:pb-48">
+        {/* Subtle background elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-slate-900/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-slate-900/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl"></div>
+
+        <div className="relative max-w-5xl mx-auto px-6 md:px-8">
+          <div className="space-y-8 md:space-y-12">
+            {/* Tagline */}
+            <div className="animate-fade-in-up animation-delay-1">
+              <p className="font-body text-sm md:text-base tracking-widest text-slate-500 uppercase letter-spacing">
+                Une Initiative Citoyenne
+              </p>
+            </div>
+
+            {/* Main Headline */}
+            <h1 className="animate-fade-in-up animation-delay-2 font-display text-6xl md:text-7xl lg:text-8xl font-bold text-slate-900 leading-tight">
+              Ensemble pour notre
+              <span className="block text-slate-400">Avenir</span>
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
-              Participez à la construction de notre programme politique. Votre voix compte.
+
+            {/* Gold accent line */}
+            <div className="animate-fade-in-up animation-delay-3 gold-accent"></div>
+
+            {/* Subtitle */}
+            <p className="animate-fade-in-up animation-delay-3 font-body text-lg md:text-xl text-slate-600 max-w-2xl leading-relaxed">
+              Participez à la construction de notre programme politique. Votre voix compte dans la démocratie participative qui nous unit.
             </p>
-          </div>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <Link to="/topics">
-              <Button size="lg" className="px-8">
-                Découvrir le programme
-              </Button>
-            </Link>
-            <Link to="/auth/register">
-              <Button variant="outline" size="lg" className="px-8">
-                S'inscrire
-              </Button>
-            </Link>
+
+            {/* CTA Buttons */}
+            <div className="animate-fade-in-up animation-delay-3 flex gap-6 flex-wrap pt-8">
+              <Link to="/topics">
+                <Button
+                  size="lg"
+                  className="cta-button px-10 md:px-12 bg-slate-900 hover:bg-slate-800 text-white font-body font-medium"
+                >
+                  Découvrir le Programme
+                </Button>
+              </Link>
+              <Link to="/auth/register">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="cta-button px-10 md:px-12 border-slate-300 text-slate-900 hover:bg-slate-50 font-body font-medium"
+                >
+                  S'inscrire Gratuitement
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="bg-background/50 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              À propos du mouvement
+      <section className="relative py-24 md:py-40 bg-white">
+        <div className="max-w-7xl mx-auto px-6 md:px-8">
+          {/* Section header */}
+          <div className="mb-20 md:mb-32 space-y-6">
+            <h2 className="font-display text-5xl md:text-6xl font-bold text-slate-900">
+              Nos Piliers
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Génération du Lien est une initiative citoyenne pour une démocratie
-              participative plus proche, plus inclusive et plus efficace.
+            <div className="gold-accent"></div>
+            <p className="font-body text-lg text-slate-600 max-w-2xl leading-relaxed">
+              Génération du Lien repose sur trois valeurs fondamentales qui guident chacune de nos décisions et actions.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature) => (
-              <Card key={feature.title}>
-                <CardContent className="pt-6 text-center space-y-4">
-                  <div className="text-5xl">{feature.icon}</div>
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-bold">{feature.title}</h3>
-                    <p className="text-sm text-muted-foreground">
-                      {feature.description}
+          {/* Features Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 lg:gap-8">
+            {features.map((feature, index) => (
+              <div
+                key={feature.number}
+                className="feature-card"
+                style={{
+                  animation: `fadeInUp 0.8s ease-out ${0.2 + index * 0.15}s forwards`,
+                  opacity: 0,
+                }}
+              >
+                <div className="relative group bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-xl p-8 md:p-10 h-full">
+                  {/* Number accent */}
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-slate-900/5 to-transparent rounded-bl-3xl group-hover:from-slate-900/10 transition-colors"></div>
+
+                  {/* Content */}
+                  <div className="relative space-y-6">
+                    <p className="font-display text-5xl md:text-6xl font-bold text-slate-900/20">
+                      {feature.number}
                     </p>
+                    <div className="space-y-4">
+                      <h3 className="font-display text-2xl md:text-3xl font-bold text-slate-900">
+                        {feature.title}
+                      </h3>
+                      <p className="font-body text-slate-600 leading-relaxed">
+                        {feature.description}
+                      </p>
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <div className="space-y-3">
-            <h2 className="text-3xl md:text-4xl font-bold">Rejoignez le mouvement</h2>
-            <p className="text-lg opacity-90">
-              Inscrivez-vous pour participer à nos consultations et contribuer à notre programme.
+      {/* About Section */}
+      <section className="relative py-24 md:py-40 bg-slate-50">
+        <div className="absolute inset-0 opacity-50">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-slate-900/5 to-transparent rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="relative max-w-4xl mx-auto px-6 md:px-8">
+          <div className="text-center space-y-8">
+            <h2 className="font-display text-5xl md:text-6xl font-bold text-slate-900">
+              À propos de Génération du Lien
+            </h2>
+            <div className="gold-accent"></div>
+            <p className="font-body text-lg md:text-xl text-slate-600 leading-relaxed max-w-3xl mx-auto">
+              Nous croyons en une démocratie participative plus proche, plus inclusive et plus efficace.
+              Chaque citoyen a le droit et la responsabilité de contribuer à l'élaboration des politiques
+              publiques qui façonnent notre société.
             </p>
           </div>
-          <Link to="/auth/register">
-            <Button variant="secondary" size="lg" className="px-8">
-              S'inscrire gratuitement
-            </Button>
-          </Link>
         </div>
       </section>
+
+      {/* CTA Final Section */}
+      <section className="relative py-32 md:py-48 overflow-hidden">
+        {/* Elegant background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-yellow-400 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-slate-400 rounded-full blur-3xl"></div>
+          </div>
+        </div>
+
+        <div className="relative max-w-4xl mx-auto px-6 md:px-8 text-center space-y-10">
+          <div className="space-y-6">
+            <h2 className="font-display text-5xl md:text-6xl font-bold text-white">
+              Prêt à Rejoindre le Mouvement?
+            </h2>
+            <p className="font-body text-lg md:text-xl text-slate-200 max-w-2xl mx-auto leading-relaxed">
+              Rejoignez des milliers de citoyens engagés qui façonnent le politique de demain. Votre inscription
+              ne prend que quelques instants.
+            </p>
+          </div>
+
+          <div className="flex justify-center gap-6 pt-8">
+            <Link to="/auth/register">
+              <Button
+                size="lg"
+                className="cta-button px-12 md:px-16 bg-white hover:bg-slate-50 text-slate-900 font-body font-semibold"
+              >
+                S'inscrire Maintenant
+              </Button>
+            </Link>
+            <Link to="/topics">
+              <Button
+                variant="outline"
+                size="lg"
+                className="cta-button px-12 md:px-16 border-white text-white hover:bg-white/10 font-body font-semibold"
+              >
+                Voir le Programme
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer hint */}
+      <footer className="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 font-body">
+        <div className="max-w-7xl mx-auto px-6 md:px-8 text-center text-sm">
+          <p>© 2026 Génération du Lien. Tous droits réservés.</p>
+        </div>
+      </footer>
     </div>
   );
 }
